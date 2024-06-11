@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<meta charset="UTF-8">
+
+<canvas id="myCanvas"
+        style="background:darkseagreen;"
+        width="500" height="300"></canvas>
+
+<script>
+
+const emojis= ['🐟', '🐠'];
+const ctx=myCanvas.getContext("2d");
+const margin=100;
+
+class Fish{
+    constructor(img){
+        this.img=img;
+
+        this.x=Math.random()*myCanvas.width;
+        this.y=Math.random()*myCanvas.height;
+
+        this.size= Math.random()*20+10;
+
+        const dir=Math.sign(Math.random()-0.5);
+        this.speed=this.size*dir*0.02;
+    }
+
+    update(ctx){
+        this.x+=this.speed;
+
+        // En atteignant les bords, on renvoie les poissons de l'autre côté.
+        if(this.x>myCanvas.width+margin){
+            this.x=0;
+        }
+        if(this.x<0-margin){
+            this.x=myCanvas.width;
+        }
+
+        ctx.save();
+        ctx.translate(this.x, this.y);
+        if(this.speed>0){
+            ctx.scale(-1,1);
+        }
+        ctx.font=this.size+"px Arial";
+        // c'est un emoji, donc du texte, on peut utiliser fillTest ici.
+        ctx.fillText(this.img, 0,0);
+        ctx.restore();
+    }
+}
+
+let fishes=new Array();
+for (let i=1;i<=50;i++){
+    fishes.push(new Fish(emojis[i%emojis.length]));
+}
+fishes.sort((a,b)=>a.size-b.size);
+
+animate();
+
+function animate(){
+    ctx.clearRect(0,0,myCanvas.width,myCanvas.height);
+    fishes.forEach(fish=>{
+        fish.update(ctx);
+    });
+    requestAnimationFrame(animate);
+}
+
+</script>
+</html>

@@ -1,0 +1,16 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: js-fishes
+  description: A funny canvas in JS with fishes
+  annotations:
+     github.com/project-slug: 'fpouyez/js-fishes'
+  #   backstage.io/techdocs-ref: dir:.
+  links:
+    - url: https://www.youtube.com/watch?v=_4QCJsBkmMI
+      title: From Radu Mariescu-Istodor
+      icon: app
+spec:
+  type: website
+  owner: user:fpouyez
+  lifecycle: experimental
